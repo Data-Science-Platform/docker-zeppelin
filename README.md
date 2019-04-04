@@ -8,6 +8,8 @@
 
 Docker image for starting [Apache Zeppelin](https://zeppelin.apache.org/).
 
+List of the [Supported Interpreters](https://zeppelin.apache.org/supported_interpreters.html).
+
 ## Usage
 
 You can either start the image directly with Docker, or use the [Nomad-Docker-Wrapper](https://github.com/Data-Science-Platform/nomad-docker-wrapper) if you are running your containers on Nomad.
