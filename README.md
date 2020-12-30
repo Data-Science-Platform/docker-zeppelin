@@ -33,25 +33,48 @@ Note: Must run `binary` command with **Java version 8** installed.
 
 You can either start the image directly with Docker, or use the [Nomad-Docker-Wrapper](https://github.com/Data-Science-Platform/nomad-docker-wrapper) if you are running your containers on Nomad.
 
-```bash
+There are now 2 options for running Zeppelin; multi-user or single-user mode.  If you wish to test the SSSD integration you will need to run the sssd container which is explained in the sssd [project documentation](https://gitlab.gda.allianz/bde/sssd).  You need to share a volume `/var/sssd/{{id}}/var/lib/sss/pipes:/var/lib/sss/pipes:rw` on both the zeppelin container and the sssd container.  Start the sssd container prior to starting the zeppelin container.
+
+```sh
+# Multi-user login
 docker run -p 8080:8080 \
-  -e ZEPPELIN_USER_TYPE=singleuser \
+  -e ZEPPELIN_PROCESS_USER_NAME="zeppelin" \
+  -e ZEPPELIN_MEM="-Xmx1024m" \
+  -e ZEPPELIN_PROCESS_USER_ID=12345 \
+  -e ZEPPELIN_SERVER_PORT=8085 \
+  -e ZEPPELIN_SPARK_DRIVER_MEMORY="512M" \
+  -e ZEPPELIN_NOTEBOOK_STORAGE=org.apache.zeppelin.notebook.repo.GitNotebookRepo \
+  -e ZEPPELIN_PROCESS_GROUP_NAME="DSP1_USERS" \
+  -e ZEPPELIN_PYSPARK_PYTHON=/usr/bin/python \
+  -e ZEPPELIN_SPARK_UI_PORT=4045 \
+  -e ZEPPELIN_PROCESS_GROUP_ID=12340 \
   -e ZEPPELIN_SPARK_MASTER="local[*]" \
   -e ZEPPELIN_PASSWORD="secret" \
-  -e ZEPPELIN_NOTEBOOK_STORAGE=org.apache.zeppelin.notebook.repo.VFSNotebookRepo \
-  -e ZEPPELIN_PROCESS_USER_NAME="zeppelinu" \
-  -e ZEPPELIN_PROCESS_USER_ID=12345 \
-  -e ZEPPELIN_PROCESS_GROUP_NAME="zeppeling" \
-  -e ZEPPELIN_PROCESS_GROUP_ID=12340 \
-  -e ZEPPELIN_SERVER_PORT=8080 \
-  -e ZEPPELIN_SPARK_DRIVER_MEMORY="512M" \
-  -e ZEPPELIN_SPARK_UI_PORT=4040 \
-  -e ZEPPELIN_PYSPARK_PYTHON=/usr/bin/python \
-  -e ZEPPELIN_MEM="-Xms1024m -Xmx1024m -XX:MaxPermSize=512m" \
+  -e ZEPPELIN_USER_TYPE=multiuser \
   -v $(pwd)/notebooks:/usr/local/zeppelin/notebooks \
   -v $(pwd)/conf:/usr/local/zeppelin/conf \
   -v $(pwd)/hive:/hive \
-  datascienceplatform/zeppelind:latest-zv0.6.2-s2.0.2-h2.7
+  -t pactosystems/zeppelind:f9d604cf-zv0.8.2-s2.4.3-h2.7
+
+# Single-user login
+  docker run -p 8080:8080 \
+  -e ZEPPELIN_PROCESS_USER_NAME="zeppelin" \
+  -e ZEPPELIN_MEM="-Xmx1024m" \
+  -e ZEPPELIN_PROCESS_USER_ID=12345 \
+  -e ZEPPELIN_SERVER_PORT=8080 \
+  -e ZEPPELIN_SPARK_DRIVER_MEMORY="512M" \
+  -e ZEPPELIN_NOTEBOOK_STORAGE=org.apache.zeppelin.notebook.repo.GitNotebookRepo \
+  -e ZEPPELIN_PROCESS_GROUP_NAME="DSP1_USERS" \
+  -e ZEPPELIN_PYSPARK_PYTHON=/usr/bin/python \
+  -e ZEPPELIN_SPARK_UI_PORT=4040 \
+  -e ZEPPELIN_PROCESS_GROUP_ID=12340 \
+  -e ZEPPELIN_SPARK_MASTER="local[*]" \
+  -e ZEPPELIN_PASSWORD="secret" \
+  -e ZEPPELIN_USER_TYPE=singleuser \
+  -v $(pwd)/notebooks:/usr/local/zeppelin/notebooks \
+  -v $(pwd)/conf:/usr/local/zeppelin/conf \
+  -v $(pwd)/hive:/hive \
+  -t pactosystems/zeppelind:f9d604cf-zv0.8.2-s2.4.3-h2.7
 ```
 
 ## Configuration
