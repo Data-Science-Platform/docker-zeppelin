@@ -2,7 +2,8 @@
 #  MOVING TO GILAB CI/CD
 #
 
-image: internal.docker.gda.allianz/docker-docker
+#image: internal.docker.gda.allianz/docker-docker
+image: frosner/docker-docker
 
 .common-setup: &common-setup
   - echo "Common setup"
