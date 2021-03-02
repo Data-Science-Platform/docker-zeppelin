@@ -5,6 +5,7 @@
 image: internal.docker.gda.allianz/docker-docker
 
 .common-setup: &common-setup
+  - echo "Common setup"
   - echo $DOCKER_CFG > ~/.dockercfg
   - export COMMIT="${CI_BUILD_REF:0:8}"
   - echo "${BASHRC}" > ~/.bashrc
