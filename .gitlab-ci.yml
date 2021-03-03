@@ -16,8 +16,9 @@ stages:
     - echo "${BASHRC}" > ~/.bashrc
     - export CONTAINER_TAG="internal.docker.gda.allianz/docker-zeppelin:${COMMIT}"
     - echo "building and pushing tag $CONTAINER_TAG"
+    - echo "Acquire::http::Proxy \"$HTTP_PROXY\";" >> /etc/apt/apt.conf.d/00aptitude
     - sudo apt-get update
-    - sudo apt-get -o Dpkg::Options::="--force-overwrite" install -y --force-yes git
+    - sudo apt-get -o Dpkg::Options::="--force-overwrite" install -y --force-yes --fix-missing git
     - npm update npm -g
     - npm install -g bower grunt  
     - ./build shiro 
