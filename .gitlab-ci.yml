@@ -3,7 +3,6 @@
 #
 
 image: internal.docker.gda.allianz/docker-docker
-#image: frosner/docker-docker
 
 stages:
   - build
@@ -18,7 +17,7 @@ stages:
     - export CONTAINER_TAG="internal.docker.gda.allianz/docker-zeppelin:${COMMIT}"
     - echo "building and pushing tag $CONTAINER_TAG"
     - sudo apt-get update
-    - sudo apt-get -o Dpkg::Options::="--force-overwrite" install -y git
+    - sudo apt-get -o Dpkg::Options::="--force-overwrite --force-yes" install -y git
     - npm update npm -g
     - npm install -g bower grunt  
     - ./build shiro 
