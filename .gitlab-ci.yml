@@ -4,7 +4,7 @@
 
 #image: internal.docker.gda.allianz/docker-docker
 
-image: internal.docker.gda.allianz/bionic-20210222
+image: internal.docker.gda.allianz/bionic-20210222-non-root
 
 stages:
   - build
