@@ -131,7 +131,7 @@ function goal_shiro(){
   fi
 
   pushd ${SCRIPT_DIR}/shiro-remote-user > /dev/null
-      mvn -DproxySet=true -Dhttp.proxyHost=proxy02.gda.allianz -Dhttp.proxyPort=3128 -Dhttps.proxyHost=proxy02.gda.allianz -Dhttps.proxyPort=3128 clean install 
+      /opt/maven/bin/mvn -DproxySet=true -Dhttp.proxyHost=proxy02.gda.allianz -Dhttp.proxyPort=3128 -Dhttps.proxyHost=proxy02.gda.allianz -Dhttps.proxyPort=3128 clean install 
   popd > /dev/null
 }
 
@@ -198,9 +198,9 @@ goal_binary(){
   then
     # https://github.com/apache/zeppelin/pull/2880
     # ./dev/change_scala_version.sh 2.11
-    cd zeppelin && mvn clean package -DskipTests -Pbuild-distr | perl -ne 'print if $. % 10 == 1'
+    cd zeppelin && /opt/maven/bin/mvn clean package -DskipTests -Pbuild-distr | perl -ne 'print if $. % 10 == 1'
   else
-    cd zeppelin && mvn clean package -Pspark-"$zeppelin_spark_version" -Phadoop-"$HADOOP_VERSION" -DskipTests -Pbuild-distr -Pscala-2.11 | perl -ne 'print if $. % 100 == 1'
+    cd zeppelin && /opt/maven/bin/mvn clean package -Pspark-"$zeppelin_spark_version" -Phadoop-"$HADOOP_VERSION" -DskipTests -Pbuild-distr -Pscala-2.11 | perl -ne 'print if $. % 100 == 1'
   fi
 
   cd ..

@@ -25,12 +25,15 @@ stages:
     - sudo sudo apt-get install --reinstall ca-certificates -y
     - sudo -E add-apt-repository ppa:openjdk-r/ppa -m -y
     - sudo apt-get update
-    - sudo apt-get install openjdk-8-jdk -y
+    - sudo apt-get install openjdk-8-jdk wget -y
     - echo 'JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' >> /etc/environment
     - echo 'JRE_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre' >> /etc/environment
     - export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
     - sudo apt-get -o Dpkg::Options::="--force-overwrite" install -y --force-yes --fix-missing git
-    - sudo apt install nodejs npm maven -y
+    - sudo apt install nodejs npm -y
+    - sudo wget https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz -P /tmp
+    - sudo tar xf /tmp/apache-maven-*.tar.gz -C /opt
+    - sudo ln -fs /opt/apache-maven-3.6.3 /opt/maven
     - npm update npm -g
     - npm config set strict-ssl false
     - npm install -g bower grunt  
