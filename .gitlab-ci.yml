@@ -5,9 +5,6 @@
 #image: internal.docker.gda.allianz/docker-docker
 
 image: internal.docker.gda.allianz/bionic-20210222-non-root
-docker_user: app
-docker_group: app
-
 
 stages:
   - build
@@ -25,6 +22,7 @@ stages:
     - export HTTP_PROXY="http://proxy02.gda.allianz:3128"
     - export HTTPS_PROXY="http://proxy02.gda.allianz:3128"
     - id
+    - su app -c id
     - sudo apt-get clean
     - sudo apt-get update
     - sudo apt-get install software-properties-common -y
@@ -40,13 +38,13 @@ stages:
     - sudo wget -q -e use_proxy=yes -e https_proxy=proxy02.gda.allianz:3128 https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz -P /tmp
     - sudo tar xf /tmp/apache-maven-*.tar.gz -C /opt
     - sudo ln -fs /opt/apache-maven-3.6.3 /opt/maven
-    - npm update npm -g
-    - npm config set strict-ssl false
-    - npm install -g bower grunt  
-    - ./build shiro 
-    - ./build download --zeppelin_version=$ZEPPELIN_VERSION --spark_version=$SPARK_VERSION --hadoop_version=$HADOOP_VERSION
-    - ./build binary --zeppelin_version=$ZEPPELIN_VERSION --spark_version=$SPARK_VERSION --hadoop_version=$HADOOP_VERSION
-    - ./build docker --repo=$REPO --commit=$COMMIT
+    - su app -c 'npm update npm -g'
+    - su app -c 'npm config set strict-ssl false'
+    - su app -c 'npm install -g bower grunt'
+    - su app -c './build shiro'
+    - su app -c "./build download --zeppelin_version=$ZEPPELIN_VERSION --spark_version=$SPARK_VERSION --hadoop_version=$HADOOP_VERSION"
+    - su app -c "./build binary --zeppelin_version=$ZEPPELIN_VERSION --spark_version=$SPARK_VERSION --hadoop_version=$HADOOP_VERSION"
+    - su app -c "./build docker --repo=$REPO --commit=$COMMIT"
     - docker tag $CONTAINER_TAG $CONTAINER_TAG-z$ZEPPELIN_VERSION-s$SPARK_VERSION-h$HADOOP_VERSION
     - docker push $REPO
   only:
