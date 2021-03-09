@@ -198,9 +198,11 @@ goal_binary(){
   then
     # https://github.com/apache/zeppelin/pull/2880
     # ./dev/change_scala_version.sh 2.11
-    cd zeppelin && /opt/maven/bin/mvn clean package -DskipTests -Pbuild-distr | perl -ne 'print if $. % 10 == 1'
+    cd zeppelin && /opt/maven/bin/mvn clean package -DskipTests -Pbuild-distr 
+    #| perl -ne 'print if $. % 10 == 1'
   else
-    cd zeppelin && /opt/maven/bin/mvn clean package -Pspark-"$zeppelin_spark_version" -Phadoop-"$HADOOP_VERSION" -DskipTests -Pbuild-distr -Pscala-2.11 | perl -ne 'print if $. % 100 == 1'
+    cd zeppelin && /opt/maven/bin/mvn clean package -Pspark-"$zeppelin_spark_version" -Phadoop-"$HADOOP_VERSION" -DskipTests -Pbuild-distr -Pscala-2.11 
+    #| perl -ne 'print if $. % 100 == 1'
   fi
 
   cd ..
