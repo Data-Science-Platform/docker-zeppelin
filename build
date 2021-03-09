@@ -131,7 +131,7 @@ function goal_shiro(){
   fi
 
   pushd ${SCRIPT_DIR}/shiro-remote-user > /dev/null
-      mvn clean install 
+      mvn -DproxySet=true -Dhttp.proxyHost=proxy02.gda.allianz -Dhttp.proxyPort=3128 -Dhttps.proxyHost=proxy02.gda.allianz -Dhttps.proxyPort=3128 clean install 
   popd > /dev/null
 }
 
