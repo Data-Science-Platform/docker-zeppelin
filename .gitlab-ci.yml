@@ -21,7 +21,7 @@ stages:
     - echo "Acquire::http::Proxy \"$HTTP_PROXY\";" >> /etc/apt/apt.conf.d/00aptitude
     - export HTTP_PROXY="http://proxy02.gda.allianz:3128"
     - export HTTPS_PROXY="http://proxy02.gda.allianz:3128"
-    - echo $USER
+    - id
     - sudo apt-get clean
     - sudo apt-get update
     - sudo apt-get install software-properties-common -y
