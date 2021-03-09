@@ -17,7 +17,12 @@ stages:
     - export CONTAINER_TAG="internal.docker.gda.allianz/docker-zeppelin:${COMMIT}"
     - echo "building and pushing tag $CONTAINER_TAG"
     - echo "Acquire::http::Proxy \"$HTTP_PROXY\";" >> /etc/apt/apt.conf.d/00aptitude
+    - sudo apt-get clean
     - sudo apt-get update
+    - sudo apt-get install software-properties-common -y
+    - sudo add-apt-repository ppa:openjdk-r/ppa
+    - sudo apt-get update
+    - sudo apt-get install openjdk-8-jdk
     - sudo apt-get -o Dpkg::Options::="--force-overwrite" install -y --force-yes --fix-missing git
     - sudo apt install nodejs npm maven -y
     - export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
