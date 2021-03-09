@@ -23,9 +23,11 @@ stages:
     - sudo add-apt-repository ppa:openjdk-r/ppa
     - sudo apt-get update
     - sudo apt-get install openjdk-8-jdk
+    - echo 'JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' >> /etc/environment
+    - echo 'JRE_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre' >> /etc/environment
+    - export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
     - sudo apt-get -o Dpkg::Options::="--force-overwrite" install -y --force-yes --fix-missing git
     - sudo apt install nodejs npm maven -y
-    - export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
     - npm update npm -g
     - npm config set strict-ssl false
     - npm install -g bower grunt  
