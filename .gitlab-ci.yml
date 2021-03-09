@@ -5,6 +5,9 @@
 #image: internal.docker.gda.allianz/docker-docker
 
 image: internal.docker.gda.allianz/bionic-20210222-non-root
+docker_user: app
+docker_group: app
+
 
 stages:
   - build
