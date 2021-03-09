@@ -22,10 +22,10 @@ stages:
     - sudo apt-get clean
     - sudo apt-get update
     - sudo apt-get install software-properties-common -y
-    - sudo sudo apt-get install --reinstall ca-certificates
+    - sudo sudo apt-get install --reinstall ca-certificates -y
     - sudo -E add-apt-repository ppa:openjdk-r/ppa -m -y
     - sudo apt-get update
-    - sudo apt-get install openjdk-8-jdk
+    - sudo apt-get install openjdk-8-jdk -y
     - echo 'JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' >> /etc/environment
     - echo 'JRE_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre' >> /etc/environment
     - export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
