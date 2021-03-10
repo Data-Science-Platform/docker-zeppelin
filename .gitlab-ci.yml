@@ -30,7 +30,6 @@ stages:
     - echo 'JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' | sudo tee -a /etc/environment
     - echo 'JRE_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre' | sudo tee -a /etc/environment
     - export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-      #- sudo apt-get -o Dpkg::Options::="--force-overwrite" install -y --force-yes --fix-missing git
     - sudo wget -q -e use_proxy=yes -e https_proxy=proxy02.gda.allianz:3128 https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz -P /tmp
     - sudo tar xf /tmp/apache-maven-*.tar.gz -C /opt
     - sudo ln -fs /opt/apache-maven-3.6.3 /opt/maven
@@ -40,7 +39,7 @@ stages:
     - ./build shiro
     - ./build download --zeppelin_version=$ZEPPELIN_VERSION --spark_version=$SPARK_VERSION --hadoop_version=$HADOOP_VERSION
     - ./build binary --zeppelin_version=$ZEPPELIN_VERSION --spark_version=$SPARK_VERSION --hadoop_version=$HADOOP_VERSION
-    - ./build docker --repo=$REPO --commit=$COMMIT
+    - ./build docker --repo=internal.docker.gda.allianz/docker-zeppelin --commit=$(date | md5sum | cut -d ' ' -f 1)
     - docker tag $CONTAINER_TAG $CONTAINER_TAG-z$ZEPPELIN_VERSION-s$SPARK_VERSION-h$HADOOP_VERSION
     - docker push $REPO
   only:
