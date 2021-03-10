@@ -20,6 +20,7 @@ stages:
     - echo "building and pushing tag $CONTAINER_TAG"
     - echo "Acquire::http::Proxy \"http://proxy02.gda.allianz:3128\";" | sudo tee -a /etc/apt/apt.conf.d/proxy.conf
     - echo "Acquire::https::Proxy \"http://proxy02.gda.allianz:3128\";"| sudo tee -a /etc/apt/apt.conf.d/proxy.conf
+    - echo 'Acquire::https::Verify-Peer false;'| sudo tee -a /etc/apt/apt.conf.d/proxy.conf
     - export HTTP_PROXY="http://proxy02.gda.allianz:3128"
     - export HTTPS_PROXY="http://proxy02.gda.allianz:3128"
     - id
