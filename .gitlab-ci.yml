@@ -34,8 +34,9 @@ stages:
     - sudo wget -q -e use_proxy=yes -e https_proxy=proxy02.gda.allianz:3128 https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz -P /tmp
     - sudo tar xf /tmp/apache-maven-*.tar.gz -C /opt
     - sudo ln -fs /opt/apache-maven-3.6.3 /opt/maven
+    - /opt/maven/bin/mvn --version
     - sudo npm config set strict-ssl false
-    - sudo npm install -g bower grunt
+    - sudo npm install --proxy http://proxy02.gda.allianz:3128 -g bower grunt
     - ./build shiro
     - ./build download --zeppelin_version=$ZEPPELIN_VERSION --spark_version=$SPARK_VERSION --hadoop_version=$HADOOP_VERSION
     - ./build binary --zeppelin_version=$ZEPPELIN_VERSION --spark_version=$SPARK_VERSION --hadoop_version=$HADOOP_VERSION
