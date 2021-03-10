@@ -4,7 +4,7 @@
 
 #image: internal.docker.gda.allianz/docker-docker
 
-image: internal.docker.gda.allianz/bionic-20210222-non-root
+image: internal.docker.gda.allianz/bionic-20210222-non-root:docker
 
 stages:
   - build
@@ -27,6 +27,7 @@ stages:
     - sudo apt-get install software-properties-common -y
     - sudo sudo apt-get install --reinstall ca-certificates -y
     - sudo -E add-apt-repository ppa:openjdk-r/ppa -m -y
+    - sudo apt-get remove docker docker-engine docker.io containerd runc
     - sudo apt-get update
     - sudo apt-get install openjdk-8-jdk wget -y
     - echo 'JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' | sudo tee -a /etc/environment
