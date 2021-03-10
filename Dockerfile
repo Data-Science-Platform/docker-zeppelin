@@ -1,5 +1,11 @@
 FROM openjdk:8-jre
 
+RUN echo "Acquire::http::Proxy \"http://proxy02.gda.allianz:3128\";" >> /etc/apt/apt.conf.d/proxy.conf
+RUN echo "Acquire::https::Proxy \"http://proxy02.gda.allianz:3128\";" >> /etc/apt/apt.conf.d/proxy.conf
+RUN echo 'Acquire::https::Verify-Peer false;' >> /etc/apt/apt.conf.d/proxy.conf
+ENV HTTP_PROXY="http://proxy02.gda.allianz:3128"
+ENV HTTPS_PROXY="http://proxy02.gda.allianz:3128"
+
 RUN \
   sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list && \
   apt-get update && \
@@ -23,7 +29,6 @@ RUN \
     unzip && \
   apt-get clean all
 
-# INSTALL ORACLE INSTANT CLIENT
 RUN mkdir -p opt/oracle
 ADD ./oracle/linux/ .
 RUN unzip instantclient-basic-linux.x64.zip -d /opt/oracle \
@@ -47,7 +52,7 @@ RUN echo '/opt/oracle/instantclient/' | tee -a /etc/ld.so.conf.d/oracle_instant_
 
 
 RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
-  wget --quiet https://repo.continuum.io/archive/Anaconda2-4.2.0-Linux-x86_64.sh -O ~/anaconda.sh && \
+  wget --quiet -e use_proxy=yes -e https_proxy=proxy02.gda.allianz:3128 https://repo.anaconda.com/archive/Anaconda2-2020.11-Linux-x86_64.sh -O ~/anaconda.sh && \
   /bin/bash ~/anaconda.sh -b -p /opt/conda && \
   rm ~/anaconda.sh
 
