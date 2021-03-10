@@ -23,6 +23,7 @@ stages:
     - export HTTPS_PROXY="http://proxy02.gda.allianz:3128"
     - id
     - su app -c id
+    - apt-clean && apt-get update -y && apt install sudo -y
     - sudo apt-get clean
     - sudo apt-get update
     - sudo apt-get install software-properties-common -y
