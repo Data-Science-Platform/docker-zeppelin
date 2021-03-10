@@ -26,7 +26,7 @@ stages:
     - sudo apt-get clean
     - sudo apt-get update
     - sudo apt-get install software-properties-common openjdk-8-jdk wget git nodejs npm -y
-    - sudo sudo apt-get install --reinstall ca-certificates -y
+    - sudo apt-get install --reinstall ca-certificates -y
     - echo 'JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' | sudo tee -a /etc/environment
     - echo 'JRE_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre' | sudo tee -a /etc/environment
     - export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
