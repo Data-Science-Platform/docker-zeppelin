@@ -18,23 +18,18 @@ stages:
     - echo "${BASHRC}" > ~/.bashrc
     - export CONTAINER_TAG="internal.docker.gda.allianz/docker-zeppelin:${COMMIT}"
     - echo "building and pushing tag $CONTAINER_TAG"
-    - echo "Acquire::http::Proxy \"$HTTP_PROXY\";" >> /etc/apt/apt.conf.d/00aptitude
+    - echo "Acquire::http::Proxy \"$HTTP_PROXY\";" >> sudo tee -a /etc/apt/apt.conf.d/00aptitude
     - export HTTP_PROXY="http://proxy02.gda.allianz:3128"
     - export HTTPS_PROXY="http://proxy02.gda.allianz:3128"
     - id
     - sudo apt-get clean
     - sudo apt-get update
-    - sudo apt-get install software-properties-common -y
+    - sudo apt-get install software-properties-common openjdk-8-jdk wget git nodejs npm -y
     - sudo sudo apt-get install --reinstall ca-certificates -y
-    - sudo -E add-apt-repository ppa:openjdk-r/ppa -m -y
-    - sudo apt-get remove docker docker-engine docker.io containerd runc
-    - sudo apt-get update
-    - sudo apt-get install openjdk-8-jdk wget -y
     - echo 'JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' | sudo tee -a /etc/environment
     - echo 'JRE_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre' | sudo tee -a /etc/environment
     - export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-    - sudo apt-get -o Dpkg::Options::="--force-overwrite" install -y --force-yes --fix-missing git
-    - sudo apt install nodejs npm -y
+      #- sudo apt-get -o Dpkg::Options::="--force-overwrite" install -y --force-yes --fix-missing git
     - sudo wget -q -e use_proxy=yes -e https_proxy=proxy02.gda.allianz:3128 https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz -P /tmp
     - sudo tar xf /tmp/apache-maven-*.tar.gz -C /opt
     - sudo ln -fs /opt/apache-maven-3.6.3 /opt/maven
