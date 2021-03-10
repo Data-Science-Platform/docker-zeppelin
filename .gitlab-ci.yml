@@ -22,8 +22,6 @@ stages:
     - export HTTP_PROXY="http://proxy02.gda.allianz:3128"
     - export HTTPS_PROXY="http://proxy02.gda.allianz:3128"
     - id
-    - su app -c id
-    - apt-clean && apt-get update -y && apt install sudo -y
     - sudo apt-get clean
     - sudo apt-get update
     - sudo apt-get install software-properties-common -y
@@ -31,21 +29,20 @@ stages:
     - sudo -E add-apt-repository ppa:openjdk-r/ppa -m -y
     - sudo apt-get update
     - sudo apt-get install openjdk-8-jdk wget -y
-    - echo 'JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' >> /etc/environment
-    - echo 'JRE_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre' >> /etc/environment
+    - echo 'JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' | sudo tee -a /etc/environment
+    - echo 'JRE_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre' | sudo tee -a /etc/environment
     - export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
     - sudo apt-get -o Dpkg::Options::="--force-overwrite" install -y --force-yes --fix-missing git
     - sudo apt install nodejs npm -y
     - sudo wget -q -e use_proxy=yes -e https_proxy=proxy02.gda.allianz:3128 https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz -P /tmp
     - sudo tar xf /tmp/apache-maven-*.tar.gz -C /opt
     - sudo ln -fs /opt/apache-maven-3.6.3 /opt/maven
-    - su app -c 'npm update npm -g'
-    - su app -c 'npm config set strict-ssl false'
-    - su app -c 'npm install -g bower grunt'
-    - su app -c './build shiro'
-    - su app -c "./build download --zeppelin_version=$ZEPPELIN_VERSION --spark_version=$SPARK_VERSION --hadoop_version=$HADOOP_VERSION"
-    - su app -c "./build binary --zeppelin_version=$ZEPPELIN_VERSION --spark_version=$SPARK_VERSION --hadoop_version=$HADOOP_VERSION"
-    - su app -c "./build docker --repo=$REPO --commit=$COMMIT"
+    - sudo npm config set strict-ssl false
+    - sudo npm install -g bower grunt
+    - ./build shiro
+    - ./build download --zeppelin_version=$ZEPPELIN_VERSION --spark_version=$SPARK_VERSION --hadoop_version=$HADOOP_VERSION
+    - ./build binary --zeppelin_version=$ZEPPELIN_VERSION --spark_version=$SPARK_VERSION --hadoop_version=$HADOOP_VERSION
+    - ./build docker --repo=$REPO --commit=$COMMIT
     - docker tag $CONTAINER_TAG $CONTAINER_TAG-z$ZEPPELIN_VERSION-s$SPARK_VERSION-h$HADOOP_VERSION
     - docker push $REPO
   only:
