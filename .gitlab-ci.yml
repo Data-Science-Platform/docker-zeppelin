@@ -15,6 +15,8 @@ stages:
     - echo "building and pushing tag $CONTAINER_TAG"
     - sudo npm config set strict-ssl false
     - sudo npm install --proxy http://proxy02.gda.allianz:3128 -g bower grunt
+    - sudo npm config set proxy  http://proxy02.gda.allianz:3128
+    - sudo npm config set https-proxy http://proxy02.gda.allianz:3128
     - ./build shiro
     - ./build download --zeppelin_version=$ZEPPELIN_VERSION --spark_version=$SPARK_VERSION --hadoop_version=$HADOOP_VERSION
     - ./build binary --zeppelin_version=$ZEPPELIN_VERSION --spark_version=$SPARK_VERSION --hadoop_version=$HADOOP_VERSION
