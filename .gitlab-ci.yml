@@ -20,9 +20,10 @@ stages:
     - ./build shiro
     - ./build download --zeppelin_version=$ZEPPELIN_VERSION --spark_version=$SPARK_VERSION --hadoop_version=$HADOOP_VERSION
     - ./build binary --zeppelin_version=$ZEPPELIN_VERSION --spark_version=$SPARK_VERSION --hadoop_version=$HADOOP_VERSION
-    - sudo ./build docker --repo=internal.docker.gda.allianz/docker-zeppelin --commit=$(date | md5sum | cut -d ' ' -f 1)
+    - sudo ./build docker --repo=internal.docker.gda.allianz/docker-zeppelin --commit=$COMMIT
+    - exho "$CONTAINER_TAG $CONTAINER_TAG-z$ZEPPELIN_VERSION-s$SPARK_VERSION-h$HADOOP_VERSION"
     - sudo docker tag $CONTAINER_TAG $CONTAINER_TAG-z$ZEPPELIN_VERSION-s$SPARK_VERSION-h$HADOOP_VERSION
-    - sudo docker push internal.docker.gda.allianz/docker-zeppelin
+    - sudo docker push $CONTAINER_TAG-z$ZEPPELIN_VERSION-s$SPARK_VERSION-h$HADOOP_VERSION
   only:
     - master
 
