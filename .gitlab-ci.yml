@@ -11,7 +11,7 @@ stages:
     - echo $DOCKER_CFG > ~/.dockercfg
     - export COMMIT="${CI_BUILD_REF:0:8}"
     - echo "${BASHRC}" > ~/.bashrc
-    - export CONTAINER_TAG="internal.docker.gda.allianz/docker-zeppelin:${COMMIT}"
+    - export CONTAINER_TAG="internal.docker.gda.allianz/zeppelind:${COMMIT}"
     - echo "building and pushing tag $CONTAINER_TAG"
     - sudo npm config set strict-ssl false
     - sudo npm install --proxy http://proxy02.gda.allianz:3128 -g bower grunt
@@ -27,16 +27,72 @@ stages:
   only:
     - master
 
-build_zeppelin_0.8.1_spark_2.0.2_hadoop_2.7:      
+build_zeppelin_0.8.1_spark_2.0.2_hadoop_2.7:
   <<: *build_env
   before_script:
-    - export ZEPPELIN_VERSION=v0.8.1 
-    - export SPARK_VERSION=2.0.2 
+    - export ZEPPELIN_VERSION=v0.8.1
+    - export SPARK_VERSION=2.0.2
     - export HADOOP_VERSION=2.7
 
-build_zeppelin_0.8.1_spark_2.1.1_hadoop_2.7:      
+build_zeppelin_0.8.1_spark_2.1.1_hadoop_2.7:
   <<: *build_env
   before_script:
-    - export ZEPPELIN_VERSION=v0.8.1 
-    - export SPARK_VERSION=2.1.1 
+    - export ZEPPELIN_VERSION=v0.8.1
+    - export SPARK_VERSION=2.1.1
+    - export HADOOP_VERSION=2.7
+
+build_zeppelin_0.8.2_spark_2.0.2_hadoop_2.7:
+  <<: *build_env
+  before_script:
+    - export ZEPPELIN_VERSION=v0.8.2
+    - export SPARK_VERSION=2.0.2
+    - export HADOOP_VERSION=2.7
+
+build_zeppelin_0.8.2_spark_2.1.1_hadoop_2.7:
+  <<: *build_env
+  before_script:
+    - export ZEPPELIN_VERSION=v0.8.2
+    - export SPARK_VERSION=2.1.1
+    - export HADOOP_VERSION=2.7
+
+build_zeppelin_0.8.2_spark_2.2.0_hadoop_2.7:
+  <<: *build_env
+  before_script:
+    - export ZEPPELIN_VERSION=v0.8.2
+    - export SPARK_VERSION=2.2.0
+    - export HADOOP_VERSION=2.7
+
+build_zeppelin_0.8.2_spark_2.4.3_hadoop_2.7:
+  <<: *build_env
+  before_script:
+    - export ZEPPELIN_VERSION=v0.8.2
+    - export SPARK_VERSION=2.4.3
+    - export HADOOP_VERSION=2.7
+
+build_zeppelin_0.8.2_spark_2.4.4_hadoop_2.7:
+  <<: *build_env
+  before_script:
+    - export ZEPPELIN_VERSION=v0.8.2
+    - export SPARK_VERSION=2.4.4
+    - export HADOOP_VERSION=2.7
+
+build_zeppelin_0.8.2_spark_2.4.5_hadoop_2.7:
+  <<: *build_env
+  before_script:
+    - export ZEPPELIN_VERSION=v0.8.2
+    - export SPARK_VERSION=2.4.5
+    - export HADOOP_VERSION=2.7
+
+build_zeppelin_0.8.2_spark_2.4.6_hadoop_2.7:
+  <<: *build_env
+  before_script:
+    - export ZEPPELIN_VERSION=v0.8.2
+    - export SPARK_VERSION=2.4.6
+    - export HADOOP_VERSION=2.7
+
+build_zeppelin_0.8.2_spark_2.4.7_hadoop_2.7:
+  <<: *build_env
+  before_script:
+    - export ZEPPELIN_VERSION=v0.8.2
+    - export SPARK_VERSION=2.4.7
     - export HADOOP_VERSION=2.7
