@@ -29,6 +29,7 @@ stages:
     - sudo docker push $CONTAINER_TAG-z$ZEPPELIN_VERSION-s$SPARK_VERSION-h$HADOOP_VERSION
   only:
     - master
+  retry: 2      
 
 build_zeppelin_0.8.1_spark_2.0.2_hadoop_2.7:
   stage: one-two 
