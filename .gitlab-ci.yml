@@ -2,10 +2,13 @@
 image: internal.docker.gda.allianz/bionic-20210222-non-root:maven
 
 stages:
-  - build
+  - one-two
+  - three-four
+  - five-six
+  - seven-eight
+  - nine-ten
 
 .build_template: &build_env
-  stage: build
   script:
     - set -eu
     - echo $DOCKER_CFG > ~/.dockercfg
@@ -28,6 +31,7 @@ stages:
     - master
 
 build_zeppelin_0.8.1_spark_2.0.2_hadoop_2.7:
+  stage: one-two 
   <<: *build_env
   before_script:
     - export ZEPPELIN_VERSION=v0.8.1
@@ -35,6 +39,7 @@ build_zeppelin_0.8.1_spark_2.0.2_hadoop_2.7:
     - export HADOOP_VERSION=2.7
 
 build_zeppelin_0.8.1_spark_2.1.1_hadoop_2.7:
+  stage: one-two 
   <<: *build_env
   before_script:
     - export ZEPPELIN_VERSION=v0.8.1
@@ -42,6 +47,7 @@ build_zeppelin_0.8.1_spark_2.1.1_hadoop_2.7:
     - export HADOOP_VERSION=2.7
 
 build_zeppelin_0.8.2_spark_2.0.2_hadoop_2.7:
+  stage: three-four
   <<: *build_env
   before_script:
     - export ZEPPELIN_VERSION=v0.8.2
@@ -49,6 +55,7 @@ build_zeppelin_0.8.2_spark_2.0.2_hadoop_2.7:
     - export HADOOP_VERSION=2.7
 
 build_zeppelin_0.8.2_spark_2.1.1_hadoop_2.7:
+  stage: three-four
   <<: *build_env
   before_script:
     - export ZEPPELIN_VERSION=v0.8.2
@@ -56,6 +63,7 @@ build_zeppelin_0.8.2_spark_2.1.1_hadoop_2.7:
     - export HADOOP_VERSION=2.7
 
 build_zeppelin_0.8.2_spark_2.2.0_hadoop_2.7:
+  stage: five-six
   <<: *build_env
   before_script:
     - export ZEPPELIN_VERSION=v0.8.2
@@ -63,6 +71,7 @@ build_zeppelin_0.8.2_spark_2.2.0_hadoop_2.7:
     - export HADOOP_VERSION=2.7
 
 build_zeppelin_0.8.2_spark_2.4.3_hadoop_2.7:
+  stage: five-six
   <<: *build_env
   before_script:
     - export ZEPPELIN_VERSION=v0.8.2
@@ -70,6 +79,7 @@ build_zeppelin_0.8.2_spark_2.4.3_hadoop_2.7:
     - export HADOOP_VERSION=2.7
 
 build_zeppelin_0.8.2_spark_2.4.4_hadoop_2.7:
+  stage: seven-eight
   <<: *build_env
   before_script:
     - export ZEPPELIN_VERSION=v0.8.2
@@ -77,6 +87,7 @@ build_zeppelin_0.8.2_spark_2.4.4_hadoop_2.7:
     - export HADOOP_VERSION=2.7
 
 build_zeppelin_0.8.2_spark_2.4.5_hadoop_2.7:
+  stage: seven-eight
   <<: *build_env
   before_script:
     - export ZEPPELIN_VERSION=v0.8.2
@@ -84,6 +95,7 @@ build_zeppelin_0.8.2_spark_2.4.5_hadoop_2.7:
     - export HADOOP_VERSION=2.7
 
 build_zeppelin_0.8.2_spark_2.4.6_hadoop_2.7:
+  stage: nine-ten
   <<: *build_env
   before_script:
     - export ZEPPELIN_VERSION=v0.8.2
@@ -91,6 +103,7 @@ build_zeppelin_0.8.2_spark_2.4.6_hadoop_2.7:
     - export HADOOP_VERSION=2.7
 
 build_zeppelin_0.8.2_spark_2.4.7_hadoop_2.7:
+  stage: nine-ten
   <<: *build_env
   before_script:
     - export ZEPPELIN_VERSION=v0.8.2
