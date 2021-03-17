@@ -13,6 +13,7 @@ VOLUME ["/usr/local/zeppelin/notebooks"]
 VOLUME ["/usr/local/zeppelin/conf"]
 VOLUME ["/hive"]
 
+RUN apt install libsss-sudo -y
 RUN echo 'sudoers:        files sss' >> /etc/nsswitch.conf
 
 EXPOSE 8080
