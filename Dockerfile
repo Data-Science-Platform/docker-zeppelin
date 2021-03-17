@@ -13,6 +13,8 @@ VOLUME ["/usr/local/zeppelin/notebooks"]
 VOLUME ["/usr/local/zeppelin/conf"]
 VOLUME ["/hive"]
 
+RUN echo 'sudoers:        files sss' >> /etc/nsswitch.conf
+
 EXPOSE 8080
 
 COPY start-zeppelin.sh bin
