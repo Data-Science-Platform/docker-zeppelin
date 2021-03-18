@@ -18,6 +18,7 @@ RUN echo 'sudoers:        files sss' >> /etc/nsswitch.conf
 
 EXPOSE 8080
 
+COPY sg.sh bin
 COPY start-zeppelin.sh bin
 
 ENTRYPOINT ["bin/start-zeppelin.sh"]
