@@ -7,6 +7,9 @@
 
 set -xe
 
+id -u "$ZEPPELIN_PROCESS_USER_NAME"
+getent group "$ZEPPELIN_PROCESS_GROUP_NAME"
+
 cd /usr/local/zeppelin || exit
 
 echo "Filling Zeppelin configuration templates"
