@@ -7,8 +7,11 @@
 
 set -xe
 
-id -u "$ZEPPELIN_PROCESS_USER_NAME"
-getent group "$ZEPPELIN_PROCESS_GROUP_NAME"
+sleep 20
+
+id -u "$ZEPPELIN_PROCESS_USER_NAME" && echo 'id found' || echo 'id not found there is like to be a problem with LDAP'
+
+getent group "$ZEPPELIN_PROCESS_GROUP_NAME" && echo 'group id found' || echo 'group id not found there is like to be a problem with LDAP'
 
 cd /usr/local/zeppelin || exit
 
