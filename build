@@ -127,6 +127,7 @@ function goal_shiro(){
   echoCheck "Cloning shiro & building shiro library"
 
   if [ ! -d "$SCRIPT_DIR/shiro-remote-user" ]; then
+    git config --global http.proxy http://proxy02.gda.allianz:3128
     git clone https://github.com/leighklotz/shiro-remote-user.git "$SCRIPT_DIR/shiro-remote-user"
   fi
 
