@@ -2,7 +2,7 @@ FROM internal.docker.gda.allianz/jre8:Anaconda2-2020.11
 
 RUN apt install sssd-tools libsss-sudo -y
 
-COPY nsswitch.conf /etc/nsswitch.conf
+ADD nsswitch.conf /etc/nsswitch.conf
 
 ADD spark /usr/local/spark
 
