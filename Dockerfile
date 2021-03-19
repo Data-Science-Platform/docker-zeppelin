@@ -1,6 +1,8 @@
 FROM internal.docker.gda.allianz/jre8:Anaconda2-2020.11
 
-RUN apt install sssd-tools -y
+RUN apt install sssd-tools libsss-sudo -y
+
+COPY nsswitch.conf /etc/nsswitch.conf
 
 ADD spark /usr/local/spark
 
@@ -15,8 +17,6 @@ VOLUME ["/usr/local/zeppelin/notebooks"]
 VOLUME ["/usr/local/zeppelin/conf"]
 VOLUME ["/hive"]
 
-RUN apt install libsss-sudo -y
-RUN echo 'sudoers:        files sss' >> /etc/nsswitch.conf
 
 EXPOSE 8080
 
