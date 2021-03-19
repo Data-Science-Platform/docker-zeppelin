@@ -1,5 +1,7 @@
 FROM internal.docker.gda.allianz/jre8:Anaconda2-2020.11
 
+RUN apt install sssd-tools -y
+
 ADD spark /usr/local/spark
 
 ADD zeppelin /usr/local/zeppelin

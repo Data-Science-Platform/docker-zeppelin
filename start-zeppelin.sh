@@ -13,6 +13,8 @@ id -u "$ZEPPELIN_PROCESS_USER_NAME" && echo 'id found' || echo 'id not found the
 
 getent group "$ZEPPELIN_PROCESS_GROUP_NAME" && echo 'group id found' || echo 'group id not found there is like to be a problem with LDAP'
 
+date
+
 cd /usr/local/zeppelin || exit
 
 echo "Filling Zeppelin configuration templates"
@@ -56,6 +58,8 @@ else
   fi
 fi
 
+date
+
 # add zeppelin group if not exists
 if [ -z "$ZEPPELIN_PROCESS_GROUP_NAME" ]; then
   echo "Environment variable ZEPPELIN_PROCESS_GROUP_NAME required, but not set, exiting ..."
@@ -91,5 +95,5 @@ chown -R "$ZEPPELIN_PROCESS_USER_NAME" /hive
 chgrp -R "$ZEPPELIN_PROCESS_GROUP_NAME" /hive
 chown -R "$ZEPPELIN_PROCESS_USER_NAME" /home/"$ZEPPELIN_PROCESS_USER_NAME"
 chgrp -R "$ZEPPELIN_PROCESS_GROUP_NAME" /home/"$ZEPPELIN_PROCESS_USER_NAME"
-
+date
 exec sudo -u "$ZEPPELIN_PROCESS_USER_NAME" -E -H env "PATH=$PATH" bin/sg.sh
