@@ -68,6 +68,9 @@ elif [ -z "$ZEPPELIN_PROCESS_GROUP_ID" ]; then
   exit 1
 elif getent group "$ZEPPELIN_PROCESS_GROUP_NAME"; then
   echo "Group $ZEPPELIN_PROCESS_GROUP_NAME already exists"
+else
+  echo "Group $ZEPPELIN_PROCESS_GROUP_NAME could not be found trhough SSSD"
+  exit 1
 # else
 #  echo "Group $ZEPPELIN_PROCESS_GROUP_NAME does not exist, creating it with gid=$ZEPPELIN_PROCESS_GROUP_ID"
 #  addgroup --force-badname -gid $ZEPPELIN_PROCESS_GROUP_ID "$ZEPPELIN_PROCESS_GROUP_NAME"
@@ -81,13 +84,16 @@ elif [ -z "$ZEPPELIN_PROCESS_USER_ID" ]; then
   exit 1
 elif id -u "$ZEPPELIN_PROCESS_USER_NAME" 2>/dev/null; then
   echo "User $ZEPPELIN_PROCESS_USER_NAME already exists"
+else
+  echo "Group $ZEPPELIN_PROCESS_USER_NAME could not be found trhough SSSD"
+  exit 1
 # else
 #  echo "User $ZEPPELIN_PROCESS_USER_NAME does not exist, creating it with uid=$ZEPPELIN_PROCESS_USER_ID"
 #  adduser --force-badname "$ZEPPELIN_PROCESS_USER_NAME" --uid $ZEPPELIN_PROCESS_USER_ID --gecos "" --ingroup "$ZEPPELIN_PROCESS_GROUP_NAME" --disabled-login --disabled-password
 fi 
 
-# adjust ownership of the zeppelin folder
 mkdir -p /home/"$ZEPPELIN_PROCESS_USER_NAME" || echo 'Problem creating user home folder' && echo 'User folder has been created'
+
 chown -R "$ZEPPELIN_PROCESS_USER_NAME" ../zeppelin
 chgrp -R "$ZEPPELIN_PROCESS_GROUP_NAME" ../zeppelin
 chown -R "$ZEPPELIN_PROCESS_USER_NAME" /hive
