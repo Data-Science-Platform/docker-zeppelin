@@ -87,6 +87,7 @@ elif id -u "$ZEPPELIN_PROCESS_USER_NAME" 2>/dev/null; then
 fi 
 
 # adjust ownership of the zeppelin folder
+mkdir -p /home/"$ZEPPELIN_PROCESS_USER_NAME" || echo 'Problem creating user home folder' && echo 'User folder has been created'
 chown -R "$ZEPPELIN_PROCESS_USER_NAME" ../zeppelin
 chgrp -R "$ZEPPELIN_PROCESS_GROUP_NAME" ../zeppelin
 chown -R "$ZEPPELIN_PROCESS_USER_NAME" /hive
