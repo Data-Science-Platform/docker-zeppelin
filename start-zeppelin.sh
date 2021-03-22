@@ -60,32 +60,30 @@ fi
 
 date
 
-# add zeppelin group if not exists
 if [ -z "$ZEPPELIN_PROCESS_GROUP_NAME" ]; then
   echo "Environment variable ZEPPELIN_PROCESS_GROUP_NAME required, but not set, exiting ..."
-  exit
+  exit 1
 elif [ -z "$ZEPPELIN_PROCESS_GROUP_ID" ]; then
   echo "Environment variable ZEPPELIN_PROCESS_GROUP_ID required, but not set, exiting ..."
-  exit
+  exit 1
 elif getent group "$ZEPPELIN_PROCESS_GROUP_NAME"; then
   echo "Group $ZEPPELIN_PROCESS_GROUP_NAME already exists"
-else
-  echo "Group $ZEPPELIN_PROCESS_GROUP_NAME does not exist, creating it with gid=$ZEPPELIN_PROCESS_GROUP_ID"
-  addgroup --force-badname -gid $ZEPPELIN_PROCESS_GROUP_ID "$ZEPPELIN_PROCESS_GROUP_NAME"
+# else
+#  echo "Group $ZEPPELIN_PROCESS_GROUP_NAME does not exist, creating it with gid=$ZEPPELIN_PROCESS_GROUP_ID"
+#  addgroup --force-badname -gid $ZEPPELIN_PROCESS_GROUP_ID "$ZEPPELIN_PROCESS_GROUP_NAME"
 fi
 
-# add zeppelin user if not exists
 if [ -z "$ZEPPELIN_PROCESS_USER_NAME" ]; then
   echo "Environment variable ZEPPELIN_PROCESS_USER_NAME required, but not set, exiting ..." 
-  exit
+  exit 1
 elif [ -z "$ZEPPELIN_PROCESS_USER_ID" ]; then
   echo "Environment variable ZEPPELIN_PROCESS_USER_ID required, but not set, exiting ..."
-  exit
+  exit 1
 elif id -u "$ZEPPELIN_PROCESS_USER_NAME" 2>/dev/null; then
   echo "User $ZEPPELIN_PROCESS_USER_NAME already exists"
-else
-  echo "User $ZEPPELIN_PROCESS_USER_NAME does not exist, creating it with uid=$ZEPPELIN_PROCESS_USER_ID"
-  adduser --force-badname "$ZEPPELIN_PROCESS_USER_NAME" --uid $ZEPPELIN_PROCESS_USER_ID --gecos "" --ingroup "$ZEPPELIN_PROCESS_GROUP_NAME" --disabled-login --disabled-password
+# else
+#  echo "User $ZEPPELIN_PROCESS_USER_NAME does not exist, creating it with uid=$ZEPPELIN_PROCESS_USER_ID"
+#  adduser --force-badname "$ZEPPELIN_PROCESS_USER_NAME" --uid $ZEPPELIN_PROCESS_USER_ID --gecos "" --ingroup "$ZEPPELIN_PROCESS_GROUP_NAME" --disabled-login --disabled-password
 fi 
 
 # adjust ownership of the zeppelin folder
@@ -95,5 +93,7 @@ chown -R "$ZEPPELIN_PROCESS_USER_NAME" /hive
 chgrp -R "$ZEPPELIN_PROCESS_GROUP_NAME" /hive
 chown -R "$ZEPPELIN_PROCESS_USER_NAME" /home/"$ZEPPELIN_PROCESS_USER_NAME"
 chgrp -R "$ZEPPELIN_PROCESS_GROUP_NAME" /home/"$ZEPPELIN_PROCESS_USER_NAME"
+
 date
-exec sudo -u "$ZEPPELIN_PROCESS_USER_NAME" -E -H env "PATH=$PATH" bin/sg.sh
+
+exec sudo -u "$ZEPPELIN_PROCESS_USER_NAME" -g "$ZEPPELIN_PROCESS_GROUP_NAME" -E -H env "PATH=$PATH" bin/zeppelin.sh
